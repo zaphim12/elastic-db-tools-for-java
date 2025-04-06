@@ -878,7 +878,7 @@ public class StoreOperationFactory implements IStoreOperationFactory {
         StoreShardMap shardMap = getStoreShardMapFromXml(root);
         StoreShard shard = getStoreShardFromXml(root);
         StoreMapping mapping = getStoreMappingFromXml(root, shard);
-        UUID lockOwnerId = UUID.fromString(root.getElementsByTagName("Lock").item(0).getTextContent());
+        UUID lockOwnerId = UUID.fromString(getLockId(root));
         return new RemoveMappingOperation(shardMapManager, operationId, undoStartState, operationCode, shardMap, mapping, lockOwnerId,
                 originalShardVersionRemoves);
     }
@@ -915,7 +915,7 @@ public class StoreOperationFactory implements IStoreOperationFactory {
         StoreMapping mappingSource = getStoreMappingFromXml((Element) root.getElementsByTagName("Step").item(0), shardSource);
         StoreMapping mappingTarget = getStoreMappingFromXml((Element) root.getElementsByTagName("Update").item(0), shardTarget);
         String patternForKill = root.getElementsByTagName("PatternForKill").item(0).getTextContent();
-        UUID lockOwnerId = UUID.fromString(root.getElementsByTagName("Lock").item(0).getTextContent());
+        UUID lockOwnerId = UUID.fromString(getLockId(root));
         return new UpdateMappingOperation(shardMapManager, operationId, undoStartState, operationCode, shardMap, mappingSource, mappingTarget,
                 patternForKill, lockOwnerId, originalShardVersionRemoves, originalShardVersionAdds);
     }
@@ -1005,7 +1005,7 @@ public class StoreOperationFactory implements IStoreOperationFactory {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Element e = (Element) nodeList.item(i);
                 mappingsSource.add(new ImmutablePair<>(getStoreMappingFromXml(e, sourceShard),
-                        UUID.fromString(e.getElementsByTagName("Lock").item(0).getTextContent())));
+                        UUID.fromString(getLockId(e))));
             }
 
             List<Pair<StoreMapping, UUID>> mappingsTarget = new ArrayList<>();
@@ -1013,7 +1013,7 @@ public class StoreOperationFactory implements IStoreOperationFactory {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Element e = (Element) nodeList.item(i);
                 mappingsTarget.add(new ImmutablePair<>(getStoreMappingFromXml(e, targetShard),
-                        UUID.fromString(e.getElementsByTagName("Lock").item(0).getTextContent())));
+                        UUID.fromString(getLockId(e))));
             }
 
             StoreShardMap shardMap = getStoreShardMapFromXml(root);
@@ -1159,5 +1159,22 @@ public class StoreOperationFactory implements IStoreOperationFactory {
             return returnValue;
         }
         return new byte[0];
+    }
+
+    /**
+     * Utility method to get the UUID for the lock.
+     * This is needed because simply calling getTextContent() on the 'Lock' element will
+     * concat text from all child nodes
+     *
+     * @param root - The root node under which the Lock node can be found
+     * @return - String containing the UUID from the node
+     */
+    private String getLockId(Element root) {
+        Node lockNode = root.getElementsByTagName("Lock").item(0);
+        Node lockIdNode = lockNode.getFirstChild();
+        while (!"Id".equals(lockIdNode.getNodeName())) {
+            lockIdNode = lockIdNode.getNextSibling();
+        }
+        return lockIdNode.getTextContent();
     }
 }

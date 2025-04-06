@@ -1,6 +1,6 @@
 package com.microsoft.azure.elasticdb.shard.storeops.base;
 
-import javax.xml.bind.annotation.XmlEnumValue;
+import jakarta.xml.bind.annotation.XmlEnumValue;
 
 /**
  * Step kind for for Bulk Operations.

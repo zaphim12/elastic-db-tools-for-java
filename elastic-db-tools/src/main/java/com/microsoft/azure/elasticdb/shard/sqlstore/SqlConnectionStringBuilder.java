@@ -64,6 +64,16 @@ public final class SqlConnectionStringBuilder {
     private String user;
 
     /**
+     * Indicates whether SSL encryption is enabled, disabled, or strict.
+     */
+    private String encrypt;
+
+    /**
+     * Indicates whether to trust the server certificate by default.
+     */
+    private boolean trustServerCertificate;
+
+    /**
      * Initializes a new instance of the SqlConnectionStringBuilder class.
      */
     public SqlConnectionStringBuilder() {
@@ -161,6 +171,22 @@ public final class SqlConnectionStringBuilder {
         this.user = value;
     }
 
+    public String getEncrypt() {
+        return encrypt;
+    }
+
+    public void setEncrypt(String value) {
+        this.encrypt = value;
+    }
+
+    public boolean getTrustServerCertificate() {
+        return trustServerCertificate;
+    }
+
+    public void setTrustServerCertificate(boolean value) {
+        this.trustServerCertificate = value;
+    }
+
     public final String getConnectionString() {
         return this.toString();
     }
@@ -197,8 +223,10 @@ public final class SqlConnectionStringBuilder {
         String timeout = this.getConnectTimeout() == 0 ? "" : "ConnectTimeout=" + this.getConnectTimeout() + ";";
         String pass = StringUtilsLocal.isNullOrEmpty(this.getPassword()) ? "" : "Password=" + this.getPassword() + ";";
         String user = StringUtilsLocal.isNullOrEmpty(this.getUser()) ? "" : "User=" + this.getUser() + ";";
+        String encrypt = StringUtilsLocal.isNullOrEmpty(this.getEncrypt()) ? "" : "Encrypt=" + this.getEncrypt() + ";";
+        String trustServerCertificate = this.getTrustServerCertificate() ? "TrustServerCertificate=" + this.getTrustServerCertificate() + ";" : "";
 
-        return "jdbc:sqlserver://" + dataSource + databaseName + user + pass + appName + timeout + integratedSecurity + persistSecurityInfo;
+        return "jdbc:sqlserver://" + dataSource + databaseName + user + pass + appName + timeout + integratedSecurity + persistSecurityInfo + encrypt + trustServerCertificate;
     }
 
     /**
@@ -234,6 +262,12 @@ public final class SqlConnectionStringBuilder {
             case "user":
                 this.user = value;
                 break;
+            case "encrypt":
+                this.encrypt = value;
+                break;
+            case "trustservercertificate":
+                this.trustServerCertificate = Boolean.parseBoolean(value);
+                break;
             default:
                 return false;
         }
@@ -263,6 +297,10 @@ public final class SqlConnectionStringBuilder {
                 return this.persistSecurityInfo;
             case "User":
                 return StringUtilsLocal.isNullOrEmpty(this.user) ? null : this.user;
+            case "Encrypt":
+                return StringUtilsLocal.isNullOrEmpty(this.encrypt) ? null : this.encrypt;
+            case "TrustServerCertificate":
+                return this.trustServerCertificate;
             default:
                 return null;
         }

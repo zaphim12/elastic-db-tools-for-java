@@ -285,6 +285,7 @@ public final class SqlUtils {
         File[] scripts = new File(Scripts.buildResourcePath()).listFiles((dir,
                 name) -> name.startsWith(prefix) && name.toLowerCase().endsWith(".sql"));
 
+        final String jarPrefix = "scripts/" + prefix;
         // When running within a jar, read files inside with JarEntry
         final File jarFile = new File(SqlUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         if (scripts == null && jarFile.getName().endsWith(".jar")) {
@@ -295,14 +296,14 @@ public final class SqlUtils {
                 while (jarEntries.hasMoreElements()) {
                     JarEntry e = jarEntries.nextElement();
                     String name = e.getName();
-                    if (name.startsWith(prefix) && name.toLowerCase().endsWith(".sql")) {
+                    if (name.startsWith(jarPrefix) && name.toLowerCase().endsWith(".sql")) {
                         fileNameList.add(name);
                     }                   
                 }
                 jar.close();
-                fileNameList.sort(Comparator.comparing(s -> s.replace(prefix, "").split("To")[0]));
+                fileNameList.sort(Comparator.comparing(s -> s.replace(jarPrefix, "").split("To")[0]));
                 fileNameList.forEach((s) -> {
-                    createUpgradeSteps(upgradeSteps, s, prefix);
+                    createUpgradeSteps(upgradeSteps, s, jarPrefix, true);
                 });
             } catch (Exception se) {
                 throw new StoreException(Errors._Store_StoreException, se);
@@ -311,7 +312,7 @@ public final class SqlUtils {
 
         else {
             Arrays.stream(scripts).sorted(Comparator.comparing(s -> s.getName().replace(prefix, "").split("To")[0])).forEachOrdered(s -> {
-                createUpgradeSteps(upgradeSteps, s.getName(), prefix);
+                createUpgradeSteps(upgradeSteps, s.getName(), prefix, false);
             });
         }
 
@@ -329,12 +330,12 @@ public final class SqlUtils {
      *            Prefix of the upgrade scripts
      * @return
      */
-    private static void createUpgradeSteps(ArrayList<UpgradeSteps> upgradeSteps, String name, String prefix) {
+    private static void createUpgradeSteps(ArrayList<UpgradeSteps> upgradeSteps, String name, String prefix, boolean isJar) {
         String[] versions = name.replace(prefix, "").split("To")[0].split("\\.");
         int initialMajorVersion = Integer.parseInt(versions[0]);
         int initialMinorVersion = Integer.parseInt(versions[1]);
         
-        for (StringBuilder cmd : splitScriptCommands(Scripts.buildResourcePath(name))) {
+        for (StringBuilder cmd : splitScriptCommands(isJar ? name : Scripts.buildResourcePath(name))) {
             upgradeSteps.add(new UpgradeSteps(initialMajorVersion, initialMinorVersion, cmd));
         }
     }

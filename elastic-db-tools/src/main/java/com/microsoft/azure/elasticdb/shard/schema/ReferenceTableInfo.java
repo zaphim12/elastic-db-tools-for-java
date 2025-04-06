@@ -2,8 +2,8 @@ package com.microsoft.azure.elasticdb.shard.schema;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 
 /*
  * Elastic database tools for Azure SQL Database.

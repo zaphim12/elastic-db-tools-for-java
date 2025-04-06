@@ -11,7 +11,7 @@ package com.microsoft.azure.elasticdb.shard.store;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 /**
  * Allows scoping of a transactional operation on the store.

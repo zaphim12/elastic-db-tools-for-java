@@ -95,7 +95,7 @@ public abstract class StoreOperationGlobal implements IStoreOperationGlobal, Aut
                     StoreResults r;
                     try {
                         // Open connection.
-                        this.establishConnnection();
+                        this.establishConnection();
 
                         try (IStoreTransactionScope ts = this.getTransactionScope()) {
                             r = this.doGlobalExecute(ts);
@@ -264,7 +264,7 @@ public abstract class StoreOperationGlobal implements IStoreOperationGlobal, Aut
     /**
      * Establishes connection to the SMM GSM database.
      */
-    private void establishConnnection() {
+    private void establishConnection() {
         globalConnection = new SqlStoreConnection(StoreConnectionKind.Global, credentials.getConnectionStringShardMapManager());
     }
 
@@ -273,7 +273,7 @@ public abstract class StoreOperationGlobal implements IStoreOperationGlobal, Aut
      *
      * @return Task to await connection establishment
      */
-    private Callable establishConnnectionAsync() {
+    private Callable establishConnectionAsync() {
         return () -> globalConnection = new SqlStoreConnection(StoreConnectionKind.Global, credentials.getConnectionStringShardMapManager());
     }
 

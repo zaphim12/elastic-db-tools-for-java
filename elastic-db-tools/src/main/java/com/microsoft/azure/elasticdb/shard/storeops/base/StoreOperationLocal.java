@@ -104,7 +104,7 @@ public abstract class StoreOperationLocal implements IStoreOperationLocal, AutoC
                 StoreResults r;
                 try {
                     // Open connection.
-                    this.establishConnnection();
+                    this.establishConnection();
 
                     try (IStoreTransactionScope ts = this.getTransactionScope()) {
                         r = this.doLocalExecute(ts);
@@ -175,7 +175,7 @@ public abstract class StoreOperationLocal implements IStoreOperationLocal, AutoC
     /**
      * Establishes connection to the target shard.
      */
-    private void establishConnnection() {
+    private void establishConnection() {
         // Open connection.
         SqlConnectionStringBuilder localConnectionString = new SqlConnectionStringBuilder(credentials.getConnectionStringShard());
         localConnectionString.setDataSource(this.getLocation().getDataSource());

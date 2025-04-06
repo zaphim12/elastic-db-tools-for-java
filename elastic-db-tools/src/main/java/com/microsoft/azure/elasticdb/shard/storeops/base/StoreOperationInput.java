@@ -3,9 +3,9 @@ package com.microsoft.azure.elasticdb.shard.storeops.base;
 import java.util.List;
 import java.util.UUID;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /*
  * Elastic database tools for Azure SQL Database.

@@ -275,11 +275,15 @@ public class ScenarioTests {
         gsmSb.setIntegratedSecurity(false);
         gsmSb.setUser(testUser);
         gsmSb.setPassword(testPassword);
+        gsmSb.setEncrypt("false");
+        gsmSb.setTrustServerCertificate(true);
 
         SqlConnectionStringBuilder lsmSb = new SqlConnectionStringBuilder(Globals.SHARD_USER_CONN_STRING);
         lsmSb.setIntegratedSecurity(false);
         lsmSb.setUser(testUser);
         lsmSb.setPassword(testPassword);
+        gsmSb.setEncrypt("false");
+        gsmSb.setTrustServerCertificate(true);
 
         basicScenarioListShardMapsInternal(gsmSb.getConnectionString(), lsmSb.getConnectionString());
 

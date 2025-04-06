@@ -8,7 +8,7 @@ package com.microsoft.azure.elasticdb.shard.store;
  * This program is made available under the terms of the MIT License. See the LICENSE file in the project root for more information.
  */
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 /**
  * Represents the version number of an assembly, operating system, or the common language runtime. This class cannot be inherited.

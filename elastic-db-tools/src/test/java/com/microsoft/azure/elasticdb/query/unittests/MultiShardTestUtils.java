@@ -103,6 +103,8 @@ public final class MultiShardTestUtils {
         connStr.setDatabaseName(SHARD_MAP_MANAGER_DATABASE_NAME);
         connStr.setUser(MULTI_SHARD_TEST_CONN_USER);
         connStr.setPassword(MULTI_SHARD_TEST_CONN_PASSWORD);
+        connStr.setEncrypt("false");
+        connStr.setTrustServerCertificate(true);
         return connStr.toString();
     }
 
@@ -114,6 +116,8 @@ public final class MultiShardTestUtils {
         connStr.setIntegratedSecurity(false);
         connStr.setUser(MULTI_SHARD_TEST_CONN_USER);
         connStr.setPassword(MULTI_SHARD_TEST_CONN_PASSWORD);
+        connStr.setEncrypt("false");
+        connStr.setTrustServerCertificate(true);
         return connStr.toString();
     }
 
@@ -126,6 +130,8 @@ public final class MultiShardTestUtils {
         connStr.setDataSource(TEST_CONN_SERVER_NAME);
         connStr.setUser(TEST_CONN_USER);
         connStr.setPassword(TEST_CONN_PASSWORD);
+        connStr.setEncrypt("false");
+        connStr.setTrustServerCertificate(true);
         return connStr.toString();
     }
 

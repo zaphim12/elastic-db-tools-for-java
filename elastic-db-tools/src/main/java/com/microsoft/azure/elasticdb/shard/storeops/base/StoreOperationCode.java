@@ -8,7 +8,7 @@ package com.microsoft.azure.elasticdb.shard.storeops.base;
  * This program is made available under the terms of the MIT License. See the LICENSE file in the project root for more information.
  */
 
-import javax.xml.bind.annotation.XmlEnumValue;
+import jakarta.xml.bind.annotation.XmlEnumValue;
 
 /**
  * Operation codes identifying various store operations.

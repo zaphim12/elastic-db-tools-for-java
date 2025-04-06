@@ -220,7 +220,7 @@ public abstract class StoreOperation implements IStoreOperation, AutoCloseable {
 
                     try {
                         // Open connections & acquire the necessary app locks.
-                        this.establishConnnections(false);
+                        this.establishConnections(false);
 
                         // Execute & commit the Global pre-Local operations.
                         r = this.doGlobalPreLocal();
@@ -297,7 +297,7 @@ public abstract class StoreOperation implements IStoreOperation, AutoCloseable {
             this.shardMapManager.getRetryPolicy().executeAction(() -> {
                 try {
                     // Open connections & acquire the necessary app locks.
-                    this.establishConnnections(true);
+                    this.establishConnections(true);
 
                     if (this.undoGlobalPreLocal()) {
                         if (this.getUndoStartState().getValue() <= StoreOperationState.UndoLocalTargetBeginTransaction.getValue()) {
@@ -632,7 +632,7 @@ public abstract class StoreOperation implements IStoreOperation, AutoCloseable {
      * @param undo
      *            Is this undo operation.
      */
-    private void establishConnnections(boolean undo) {
+    private void establishConnections(boolean undo) {
         operationState = undo ? StoreOperationState.UndoGlobalConnect : StoreOperationState.DoGlobalConnect;
 
         // Find the necessary information for connections.

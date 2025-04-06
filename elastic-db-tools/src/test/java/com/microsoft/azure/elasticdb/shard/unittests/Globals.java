@@ -36,6 +36,8 @@ final class Globals {
     private static Properties properties = loadProperties();
     private static final String TEST_CONN_USER = properties.getProperty("TEST_CONN_USER");
     private static final String TEST_CONN_PASSWORD = properties.getProperty("TEST_CONN_PASSWORD");
+    private static final String TEST_ENCRYPT_VALUE = properties.getProperty("TEST_ENCRYPT_VALUE");
+    private static final boolean TEST_TRUST_SERVER_CERT_VALUE = Boolean.parseBoolean(properties.getProperty("TEST_TRUST_SERVER_CERT_VALUE"));
 
     static final String TEMP_CONN_USER = properties.getProperty("TEMP_CONN_USER");
     static final String TEMP_CONN_PASSWORD = properties.getProperty("TEMP_CONN_PASSWORD");
@@ -78,6 +80,8 @@ final class Globals {
         connStr.setIntegratedSecurity(false);
         connStr.setUser(TEST_CONN_USER);
         connStr.setPassword(TEST_CONN_PASSWORD);
+        connStr.setEncrypt(TEST_ENCRYPT_VALUE);
+        connStr.setTrustServerCertificate(TEST_TRUST_SERVER_CERT_VALUE);
         return connStr.toString();
     }
 
@@ -89,6 +93,8 @@ final class Globals {
         connStr.setDataSource(TEST_CONN_SERVER_NAME);
         connStr.setUser(TEST_CONN_USER);
         connStr.setPassword(TEST_CONN_PASSWORD);
+        connStr.setEncrypt(TEST_ENCRYPT_VALUE);
+        connStr.setTrustServerCertificate(TEST_TRUST_SERVER_CERT_VALUE);
         connStr.setIntegratedSecurity(false);
         return connStr.toString();
     }
@@ -97,6 +103,8 @@ final class Globals {
         SqlConnectionStringBuilder connStr = new SqlConnectionStringBuilder();
         connStr.setUser(TEST_CONN_USER);
         connStr.setPassword(TEST_CONN_PASSWORD);
+        connStr.setEncrypt(TEST_ENCRYPT_VALUE);
+        connStr.setTrustServerCertificate(TEST_TRUST_SERVER_CERT_VALUE);
         connStr.setIntegratedSecurity(true);
         return connStr.toString();
     }

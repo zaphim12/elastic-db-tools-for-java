@@ -54,6 +54,8 @@ public class Program {
     private static final String Server = properties.getProperty("TEST_CONN_SERVER_NAME");
     private static final String UserName = properties.getProperty("TEST_CONN_USER");
     private static final String Password = properties.getProperty("TEST_CONN_PASSWORD");
+    private static final String Encrypt = properties.getProperty("TEST_ENCRYPT_VALUE");
+    private static final boolean TrustServerCertificate = Boolean.parseBoolean(properties.getProperty("TEST_TRUST_SERVER_CERT_VALUE"));
     private static ShardMapType shardMapType = ShardMapType.RangeShardMap;
 
     private static Properties loadProperties() {
@@ -204,6 +206,8 @@ public class Program {
         tempVar.setPassword(Password);
         tempVar.setDataSource(Server);
         tempVar.setDatabaseName(Database);
+        tempVar.setEncrypt(Encrypt);
+        tempVar.setTrustServerCertificate(TrustServerCertificate);
         return tempVar;
     }
 
@@ -267,6 +271,8 @@ public class Program {
         b.setDataSource(Server);
         b.setUser(UserName);
         b.setPassword(Password);
+        b.setEncrypt(Encrypt);
+        b.setTrustServerCertificate(TrustServerCertificate);
         b.setDatabaseName(db);
         return b;
     }
